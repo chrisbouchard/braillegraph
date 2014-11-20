@@ -1,4 +1,4 @@
-'''Hello'''
+'''A library for creating graphs using Unicode braille characters'''
 
 import argparse
 import itertools
