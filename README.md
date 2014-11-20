@@ -11,13 +11,13 @@ Installation
 ------------
 This package is hosted on PyPI, so installation should be as simple as
 
-    pip install braillegraph
+    % pip install braillegraph
 
 Note that this package requires **at least Python 3.3**, so if your default Python installation is still Python 2, make sure you use `pip3`.
 
 If you want to install from this repository, download it and run
 
-    python setup.py install
+    % python setup.py install
 
 Again, use `python3` if necessary.
 
