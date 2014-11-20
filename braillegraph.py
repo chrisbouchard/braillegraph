@@ -1,5 +1,6 @@
 '''Hello'''
 
+import argparse
 import itertools
 
 
@@ -71,4 +72,29 @@ def braillegraph(bars):
 
     # Join all the lines to make the final graph
     return '\n'.join(lines)
+
+
+def run():
+    '''Display the arguments as a braille graph on standard output.'''
+    parser = argparse.ArgumentParser(
+        prog='python braillegraph.py',
+        description='Print a braille bar graph of the given integers.'
+    )
+    parser.add_argument('integers', metavar='N', type=int, nargs='+',
+                        help='an integer')
+    parser.add_argument('-n', '--no-newline', action='store_true',
+                        help='do not print the trailing newline character')
+
+    args = parser.parse_args()
+    print_kwargs = {}
+
+    if args.no_newline:
+        print_kwargs['end'] = ''
+
+    # pylint: disable=star-args
+    print(braillegraph(int(x) for x in args.integers), **print_kwargs)
+
+
+if __name__ == '__main__':
+    run()
 
