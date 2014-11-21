@@ -1,7 +1,7 @@
 '''A library for creating graphs using Unicode braille characters'''
 
 import argparse
-import braillegraph
+from . import braillegraph
 
 
 def run():
@@ -25,9 +25,14 @@ def run():
                         dest='end', const='', default=None,
                         help='do not print the trailing newline character')
 
+    # The separator for groups of bars (i.e., "lines"). If we pass None,
+    # braillegraph will use its default.
+    parser.add_argument('-s', '--sep', action='store', default=None,
+                        help='separator for groups of bars')
+
     args = parser.parse_args()
 
-    print(braillegraph.braillegraph(args.integers), end=args.end)
+    print(braillegraph(args.integers, sep=args.sep), end=args.end)
 
 
 if __name__ == '__main__':

@@ -1,74 +1,37 @@
-'''A library for creating graphs using Unicode braille characters'''
+'''A library for creating graphs using Unicode braille characters
 
-import itertools
+https://pypi.python.org/pypi/braillegraph
 
+Someone on reddit posted a screenshot of their xmobar setup, which used braille
+characters to show the loads of their four processor cores, as well as several
+other metrics. I was impressed that you could fit so much data into a single
+line. I immediately set out to implement braille bar graphs for myself.
 
-# The Unicode codepoint for an empty braille blocks (no raised dots)
-_BRAILLE_EMPTY_BLOCK = 0x2800
+The characters this script outputs are in the Unicode Braille Patterns section,
+code points 0x2800 through 0x28FF. Not all fonts support these characters, so
+if you can't see the examples below check your font settings.
 
-# The offsets to add for dots. The dots are represented as an 8-bit bitfield as
-# follows:
-#
-#     0x01  0x08
-#     0x02  0x10
-#     0x04  0x20
-#     0x40  0x80
-#
-# Half rows only have a left-most dot. Full rows have both dots.
-_BRAILLE_HALF_ROW = [0x01, 0x02, 0x04, 0x40]
-_BRAILLE_FULL_ROW = [0x09, 0x12, 0x24, 0xC0]
+There are two ways to use this package: imported in Python code, or as a
+command line script.
 
+To use the package in Python, import it and use the braillegraph function.
 
-def _chunk(iterable, size):
-    '''Split an iterable into chunks of a fixed size.'''
-    yield from (
-        (item for index, item in group)
-        for key, group in itertools.groupby(
-            enumerate(iterable),
-            lambda item: item[0] // size
-        )
-    )
+    >>> from braillegraph import braillegraph
+    >>> braillegraph([1, 2, 3, 4])
+    '⣷⣄'
 
+To use the package as a script, run it as
 
-def braillegraph(bars):
-    '''Doc string'''
-    lines = []
+    % python -m braillegraph 1 2 3 4 5 6
+    ⣷⣄
+    ⠛⠛⠓
 
-    # Break the bars into groups of four, one for each row in the braille
-    # blocks.
-    for bar_group in _chunk(bars, 4):
-        line = []
+For a description of the arguments and flags, run
 
-        for braille_row, bar_value in enumerate(bar_group):
-            # The number of full braille blocks needed to draw this bar. Each
-            # block is two dots wide.
-            full_blocks_needed = bar_value // 2
+    % python -m braillegraph --help
+'''
 
-            # The number of braille blocks needed to draw this bar. The second
-            # term accounts for a possible half row.
-            blocks_needed = full_blocks_needed + (bar_value % 2)
+from .braillegraph import braillegraph
 
-            # The number of braille blocks we'll need to append to the current
-            # line to accomodate this bar
-            extra_blocks_needed = blocks_needed - len(line)
-
-            # If we need extra blocks, add them.
-            if extra_blocks_needed > 0:
-                line.extend([_BRAILLE_EMPTY_BLOCK] * extra_blocks_needed)
-
-            # Fill in the majority of the bar with full braille rows (two dots).
-            for block_index in range(full_blocks_needed):
-                line[block_index] += _BRAILLE_FULL_ROW[braille_row]
-
-            # If the bar's value is odd, we'll need to add a single dot at the
-            # end.
-            if bar_value % 2:
-                line[full_blocks_needed] += _BRAILLE_HALF_ROW[braille_row]
-
-        # Wrap up this line by converting all the code points to characters
-        # and concatenating them.
-        lines.append(''.join(chr(code) for code in line))
-
-    # Join all the lines to make the final graph
-    return '\n'.join(lines)
+__all__ = ['braillegraph']
 
