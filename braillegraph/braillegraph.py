@@ -200,7 +200,7 @@ def horizontal_graph(*args):
 
     Alternately, the arguments can be passed directly:
 
-        >>> vertical_graph(1, 2, 3, 4)
+        >>> horizontal_graph(1, 2, 3, 4)
         '⣠⣾'
     '''
     lines = []

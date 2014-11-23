@@ -1,4 +1,7 @@
-# This is the standard GitHub Python ignore list.
+# This is based on the standard GitHub Python ignore list.
+
+# Project-specific ignore list:
+README.rst
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
