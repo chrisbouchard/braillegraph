@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name='braillegraph',
-      version='0.4',
+      version='0.5',
       description='A library for creating graphs using Unicode braille characters',
       url='http://github.com/chrisbouchard/braillegraph',
       author='Chris Bouchard',
