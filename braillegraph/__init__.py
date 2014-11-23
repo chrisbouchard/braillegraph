@@ -14,24 +14,31 @@ if you can't see the examples below check your font settings.
 There are two ways to use this package: imported in Python code, or as a
 command line script.
 
-To use the package in Python, import it and use the braillegraph function.
+To use the package in Python, import it and use the vertical_graph and
+horizontal_graph functions.
 
-    >>> from braillegraph import braillegraph
-    >>> braillegraph([1, 2, 3, 4])
-    '⣷⣄'
+    >>> from braillegraph import vertical_graph, horizontal_graph
+    >>> vertical_graph([3, 1, 4, 1])
+    '⡯⠥'
+    >>> horizontal_graph([3, 1, 4, 1])
+    '⣆⣇'
 
 To use the package as a script, run it as
 
-    % python -m braillegraph 1 2 3 4 5 6
-    ⣷⣄
-    ⠛⠛⠓
+    % python -m braillegraph vertical 3 1 4 1 5 9 2 6
+    ⡯⠥
+    ⣿⣛⣓⠒⠂
+    % python -m braillegraph horizontal 3 1 4 1 5 9 2 6
+    ⠀⠀⢀
+    ⠀⠀⣸⢠
+    ⣆⣇⣿⣼
 
 For a description of the arguments and flags, run
 
     % python -m braillegraph --help
 '''
 
-from .braillegraph import braillegraph
+from .braillegraph import vertical_graph, horizontal_graph
 
-__all__ = ['braillegraph']
+__all__ = ['vertical_graph', 'horizontal_graph']
 
