@@ -76,11 +76,11 @@ def _chunk(iterable, size):
     # copy of the iterator size times, then pull a value from each to form a
     # chunk. The last chunk may have some trailing Nones if the length of the
     # iterable isn't a multiple of size, so we filter them out.
-    #
-    # pylint: disable=star-args
+
     args = (iter(iterable),) * size
 
     return (
+        # pylint: disable=star-args
         itertools.takewhile(lambda x: x is not None, group)
         for group in itertools.zip_longest(*args)
     )
@@ -110,8 +110,14 @@ def _matrix_add_column(matrix, column, default=0):
 
 def vertical_graph(*args, sep='\n'):
     '''Consume an iterable of integers and produce a vertical bar graph using
-    braille characters. If the iterable contains more than four integers, it
-    will be chunked into groups of four, separated with newlines by default.
+    braille characters.
+
+    The graph is vertical in that its dependent axis is the vertical axis. Thus
+    each value is represented as a row running left to right, and values are
+    listed top to bottom.
+
+    If the iterable contains more than four integers, it will be chunked into
+    groups of four, separated with newlines by default.
 
         >>> vertical_graph([1, 2, 3, 4])
         '⣷⣄'
@@ -138,12 +144,11 @@ def vertical_graph(*args, sep='\n'):
     # If the arguments were passed as a single iterable, pull it out.
     # Otherwise, just use them as-is.
     if len(args) == 1:
-
         bars = args[0]
     else:
         bars = args
 
-    # Make sure we use the default
+    # Make sure we use the default when needed
     if sep is None:
         sep = '\n'
 
@@ -190,6 +195,15 @@ def horizontal_graph(*args):
     '''Consume an iterable of integers and produce a horizontal bar graph using
     braille characters.
 
+    The graph is horizontal in that its dependent axis is the horizontal axis.
+    Thus each value is represented as a column running bottom to top, and
+    values are listed left to right.
+
+    The graph is anchored to the bottom, so columns fill in from the bottom of
+    the current braille character and the next character is added on top when
+    needed. For columns with no dots, the blank braille character is used, not
+    a space character.
+
         >>> horizontal_graph([1, 2, 3, 4])
         '⣠⣾'
         >>> horizontal_graph([1, 2, 3, 4, 5, 6])
@@ -235,14 +249,17 @@ def horizontal_graph(*args):
             column = ([_BRAILLE_EMPTY_BLOCK] * extra_blocks_needed) + column
 
             # Fill in the majority of the column with full braille colums (four
-            # dots).
+            # dots). We negate the index to access from the end of the list.
             for block_index in range(-full_blocks_needed, 0, 1):
                 column[block_index] += _BRAILLE_FULL_COL[braille_col]
 
-            # If we need a partial column, fill it in.
+            # If we need a partial column, fill it in. We negate the index to
+            # access from the end of the list.
             if bar_value % 4:
                 partial_index = (bar_value % 4) - 1
-                column[-blocks_needed] += _BRAILLE_PARTIAL_COL[braille_col][partial_index]
+                column[-blocks_needed] += (
+                    _BRAILLE_PARTIAL_COL[braille_col][partial_index]
+                )
 
         # Add this column to the lines.
         _matrix_add_column(lines, column, default=_BRAILLE_EMPTY_BLOCK)
