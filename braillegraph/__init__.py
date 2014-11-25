@@ -1,4 +1,4 @@
-'''A library for creating graphs using Unicode braille characters
+"""A library for creating graphs using Unicode braille characters
 
 https://pypi.python.org/pypi/braillegraph
 
@@ -36,7 +36,7 @@ To use the package as a script, run it as
 For a description of the arguments and flags, run
 
     % python -m braillegraph --help
-'''
+"""
 
 from .braillegraph import vertical_graph, horizontal_graph
 

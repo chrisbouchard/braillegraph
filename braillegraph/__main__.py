@@ -1,4 +1,4 @@
-'''A library for creating graphs using Unicode braille characters
+"""A library for creating graphs using Unicode braille characters
 
 https://pypi.python.org/pypi/braillegraph
 
@@ -36,14 +36,14 @@ To use the package as a script, run it as
 For a description of the arguments and flags, run
 
     % python -m braillegraph --help
-'''
+"""
 
 import argparse
 from .braillegraph import horizontal_graph, vertical_graph
 
 
 def run():
-    '''Display the arguments as a braille graph on standard output.'''
+    """Display the arguments as a braille graph on standard output."""
 
     # We override the program name to reflect that this script must be run with
     # the python executable.
@@ -63,17 +63,17 @@ def run():
     subparsers = parser.add_subparsers(title='directions')
 
     horizontal_parser = subparsers.add_parser('horizontal',
-                                             help='a horizontal graph')
+                                              help='a horizontal graph')
     horizontal_parser.set_defaults(
-        func = lambda args: horizontal_graph(args.integers)
+        func=lambda args: horizontal_graph(args.integers)
     )
     horizontal_parser.add_argument('integers', metavar='N', type=int,
                                    nargs='+', help='an integer')
 
     vertical_parser = subparsers.add_parser('vertical',
-                                           help='a vertical graph')
+                                            help='a vertical graph')
     vertical_parser.set_defaults(
-        func = lambda args: vertical_graph(args.integers, sep=args.sep)
+        func=lambda args: vertical_graph(args.integers, sep=args.sep)
     )
     vertical_parser.add_argument('integers', metavar='N', type=int, nargs='+',
                                  help='an integer')

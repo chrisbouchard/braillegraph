@@ -1,4 +1,4 @@
-'''A library for creating graphs using Unicode braille characters
+"""A library for creating graphs using Unicode braille characters
 
 https://pypi.python.org/pypi/braillegraph
 
@@ -36,7 +36,7 @@ To use the package as a script, run it as
 For a description of the arguments and flags, run
 
     % python -m braillegraph --help
-'''
+"""
 
 import itertools
 
@@ -71,7 +71,7 @@ _BRAILLE_PARTIAL_COL = [
 
 
 def _chunk(iterable, size):
-    '''Split an iterable into chunks of a fixed size.'''
+    """Split an iterable into chunks of a fixed size."""
     # We're going to use some star magic to chunk the iterable. We create a
     # copy of the iterator size times, then pull a value from each to form a
     # chunk. The last chunk may have some trailing Nones if the length of the
@@ -87,9 +87,9 @@ def _chunk(iterable, size):
 
 
 def _matrix_add_column(matrix, column, default=0):
-    '''Given a matrix as a list of lists, add a column to the right, filling in
+    """Given a matrix as a list of lists, add a column to the right, filling in
     with a default value if necessary.
-    '''
+    """
     extra_rows_needed = len(column) - len(matrix)
     width = len(matrix[0]) if matrix else 0
     offset = 0
@@ -109,7 +109,7 @@ def _matrix_add_column(matrix, column, default=0):
 
 
 def vertical_graph(*args, sep='\n'):
-    '''Consume an iterable of integers and produce a vertical bar graph using
+    """Consume an iterable of integers and produce a vertical bar graph using
     braille characters.
 
     The graph is vertical in that its dependent axis is the vertical axis. Thus
@@ -138,7 +138,7 @@ def vertical_graph(*args, sep='\n'):
 
         >>> vertical_graph(3, 1, 4, 1, 5, 9, 2, 6, sep=' ')
         '⡯⠥ ⣿⣛⣓⠒⠂'
-    '''
+    """
     lines = []
 
     # If the arguments were passed as a single iterable, pull it out.
@@ -192,7 +192,7 @@ def vertical_graph(*args, sep='\n'):
 
 
 def horizontal_graph(*args):
-    '''Consume an iterable of integers and produce a horizontal bar graph using
+    """Consume an iterable of integers and produce a horizontal bar graph using
     braille characters.
 
     The graph is horizontal in that its dependent axis is the horizontal axis.
@@ -216,7 +216,7 @@ def horizontal_graph(*args):
 
         >>> horizontal_graph(1, 2, 3, 4)
         '⣠⣾'
-    '''
+    """
     lines = []
 
     # If the arguments were passed as a single iterable, pull it out.
