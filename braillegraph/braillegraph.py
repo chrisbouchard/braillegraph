@@ -1,4 +1,4 @@
-"""A library for creating graphs using Unicode braille characters
+"""A library for creating graphs using Unicode braille characters.
 
 https://pypi.python.org/pypi/braillegraph
 
