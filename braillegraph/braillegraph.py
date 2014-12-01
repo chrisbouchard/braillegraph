@@ -17,25 +17,25 @@ command line script.
 To use the package in Python, import it and use the vertical_graph and
 horizontal_graph functions.
 
->>> from braillegraph import vertical_graph, horizontal_graph
->>> vertical_graph([3, 1, 4, 1])
-'⡯⠥'
->>> horizontal_graph([3, 1, 4, 1])
-'⣆⣇'
+    >>> from braillegraph import vertical_graph, horizontal_graph
+    >>> vertical_graph([3, 1, 4, 1])
+    '⡯⠥'
+    >>> horizontal_graph([3, 1, 4, 1])
+    '⣆⣇'
 
 To use the package as a script, run it as
 
-% python -m braillegraph vertical 3 1 4 1 5 9 2 6
-⡯⠥
-⣿⣛⣓⠒⠂
-% python -m braillegraph horizontal 3 1 4 1 5 9 2 6
-⠀⠀⢀
-⠀⠀⣸⢠
-⣆⣇⣿⣼
+    % python -m braillegraph vertical 3 1 4 1 5 9 2 6
+    ⡯⠥
+    ⣿⣛⣓⠒⠂
+    % python -m braillegraph horizontal 3 1 4 1 5 9 2 6
+    ⠀⠀⢀
+    ⠀⠀⣸⢠
+    ⣆⣇⣿⣼
 
 For a description of the arguments and flags, run
 
-% python -m braillegraph --help
+    % python -m braillegraph --help
 """
 
 import itertools
@@ -119,25 +119,25 @@ def vertical_graph(*args, sep='\n'):
     If the iterable contains more than four integers, it will be chunked into
     groups of four, separated with newlines by default.
 
-    >>> vertical_graph([1, 2, 3, 4])
-    '⣷⣄'
-    >>> vertical_graph([1, 2, 3, 4, 5, 6])
-    '⣷⣄\n⠛⠛⠓'
-    >>> print(vertical_graph([1, 2, 3, 4, 5, 6]))
-    ⣷⣄
-    ⠛⠛⠓
+        >>> vertical_graph([1, 2, 3, 4])
+        '⣷⣄'
+        >>> vertical_graph([1, 2, 3, 4, 5, 6])
+        '⣷⣄\n⠛⠛⠓'
+        >>> print(vertical_graph([1, 2, 3, 4, 5, 6]))
+        ⣷⣄
+        ⠛⠛⠓
 
     Alternately, the arguments can be passed directly:
 
-    >>> vertical_graph(1, 2, 3, 4)
-    '⣷⣄'
+        >>> vertical_graph(1, 2, 3, 4)
+        '⣷⣄'
 
     The optional sep parameter controls how groups are separated. If sep is not
     passed (or if it is None), they are put on their own lines. For example, to
     keep everything on one line, space could be used:
 
-    >>> vertical_graph(3, 1, 4, 1, 5, 9, 2, 6, sep=' ')
-    '⡯⠥ ⣿⣛⣓⠒⠂'
+        >>> vertical_graph(3, 1, 4, 1, 5, 9, 2, 6, sep=' ')
+        '⡯⠥ ⣿⣛⣓⠒⠂'
 
     """
     lines = []
@@ -205,18 +205,18 @@ def horizontal_graph(*args):
     needed. For columns with no dots, the blank braille character is used, not
     a space character.
 
-    >>> horizontal_graph([1, 2, 3, 4])
-    '⣠⣾'
-    >>> horizontal_graph([1, 2, 3, 4, 5, 6])
-    '⠀⠀⣠\n⣠⣾⣿'
-    >>> print(horizontal_graph([1, 2, 3, 4, 5, 6]))
-    ⠀⠀⣠
-    ⣠⣾⣿
+        >>> horizontal_graph([1, 2, 3, 4])
+        '⣠⣾'
+        >>> horizontal_graph([1, 2, 3, 4, 5, 6])
+        '⠀⠀⣠\n⣠⣾⣿'
+        >>> print(horizontal_graph([1, 2, 3, 4, 5, 6]))
+        ⠀⠀⣠
+        ⣠⣾⣿
 
     Alternately, the arguments can be passed directly:
 
-    >>> horizontal_graph(1, 2, 3, 4)
-    '⣠⣾'
+        >>> horizontal_graph(1, 2, 3, 4)
+        '⣠⣾'
 
     """
     lines = []
