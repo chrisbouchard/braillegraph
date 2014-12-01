@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(name='braillegraph',
-      version='0.6',
+      version='0.7',
       description='A library for creating graphs using Unicode braille characters',
       url='http://github.com/chrisbouchard/braillegraph',
       author='Chris Bouchard',
@@ -19,5 +19,6 @@ setup(name='braillegraph',
           'Topic :: Utilities'
       ],
       packages=['braillegraph'],
+      test_suite='braillegraph.tests.test_braillegraph',
       zip_safe=False)
 
