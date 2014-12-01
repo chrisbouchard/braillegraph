@@ -12,13 +12,17 @@ Installation
 ------------
 This package is hosted on PyPI, so installation should be as simple as
 
-    % pip install braillegraph
+```sh
+% pip install braillegraph
+```
 
 Note that this package requires **at least Python 3.3**, so if your default Python installation is still Python 2, make sure you use `pip3`.
 
 If you want to install from this repository, download it and run
 
-    % python setup.py install
+```sh
+% python setup.py install
+```
 
 Again, use `python3` if necessary.
 
@@ -30,42 +34,50 @@ There are two ways to use this package: imported in Python code, or as a command
 
 To use the package in Python, import it and use the `vertical_graph` and `horizontal_graph` functions.
 
-    >>> from braillegraph import vertical_graph, horizontal_graph
-    >>> vertical_graph([3, 1, 4, 1])
-    '⡯⠥'
-    >>> vertical_graph([1, 2, 3, 4, 5, 6])
-    '⣷⣄\n⠛⠛⠓'
-    >>> print(vertical_graph([1, 2, 3, 4, 5, 6]))
-    ⣷⣄
-    ⠛⠛⠓
-    >>> horizontal_graph([3, 1, 4, 1])
-    '⣆⣇'
-    >>> horizontal_graph([1, 2, 3, 4, 5, 6])
-    '⠀⠀⣠\n⣠⣾⣿'
-    >>> print(horizontal_graph([1, 2, 3, 4, 5, 6]))
-    ⠀⠀⣠
-    ⣠⣾⣿
+```python
+>>> from braillegraph import vertical_graph, horizontal_graph
+>>> vertical_graph([3, 1, 4, 1])
+'⡯⠥'
+>>> vertical_graph([1, 2, 3, 4, 5, 6])
+'⣷⣄\n⠛⠛⠓'
+>>> print(vertical_graph([1, 2, 3, 4, 5, 6]))
+⣷⣄
+⠛⠛⠓
+>>> horizontal_graph([3, 1, 4, 1])
+'⣆⣇'
+>>> horizontal_graph([1, 2, 3, 4, 5, 6])
+'⠀⠀⣠\n⣠⣾⣿'
+>>> print(horizontal_graph([1, 2, 3, 4, 5, 6]))
+⠀⠀⣠
+⣠⣾⣿
+```
 
 Alternately, the arguments can be passed directly:
 
-    >>> vertical_graph(3, 1, 4, 1)
-    '⡯⠥'
-    >>> horizontal_graph(3, 1, 4, 1)
-    '⣆⣇'
+```python
+>>> vertical_graph(3, 1, 4, 1)
+'⡯⠥'
+>>> horizontal_graph(3, 1, 4, 1)
+'⣆⣇'
+```
 
 To use the package as a script, run it as
 
-    % python -m braillegraph vertical 3 1 4 1 5 9 2 6
-    ⡯⠥
-    ⣿⣛⣓⠒⠂
-    % python -m braillegraph horizontal 3 1 4 1 5 9 2 6
-    ⠀⠀⢀
-    ⠀⠀⣸⢠
-    ⣆⣇⣿⣼
+```sh
+% python -m braillegraph vertical 3 1 4 1 5 9 2 6
+⡯⠥
+⣿⣛⣓⠒⠂
+% python -m braillegraph horizontal 3 1 4 1 5 9 2 6
+⠀⠀⢀
+⠀⠀⣸⢠
+⣆⣇⣿⣼
+```
 
 For a description of the arguments and flags, run
 
-    % python -m braillegraph --help
+```sh
+% python -m braillegraph --help
+```
 
 
 Functions
@@ -80,23 +92,29 @@ The graph is vertical in that its dependent axis is the vertical axis. Thus each
 
 If the iterable contains more than four integers, it will be chunked into groups of four, separated with newlines by default.
 
-    >>> vertical_graph([1, 2, 3, 4])
-    '⣷⣄'
-    >>> vertical_graph([1, 2, 3, 4, 5, 6])
-    '⣷⣄\n⠛⠛⠓'
-    >>> print(vertical_graph([1, 2, 3, 4, 5, 6]))
-    ⣷⣄
-    ⠛⠛⠓
+```python
+>>> vertical_graph([1, 2, 3, 4])
+'⣷⣄'
+>>> vertical_graph([1, 2, 3, 4, 5, 6])
+'⣷⣄\n⠛⠛⠓'
+>>> print(vertical_graph([1, 2, 3, 4, 5, 6]))
+⣷⣄
+⠛⠛⠓
+```
 
 Alternately, the arguments can be passed directly:
 
-    >>> vertical_graph(1, 2, 3, 4)
-    '⣷⣄'
+```python
+>>> vertical_graph(1, 2, 3, 4)
+'⣷⣄'
+```
 
 The optional `sep` parameter controls how groups are separated. If `sep` is not passed (or if it is `None`), they are put on their own lines. For example, to keep everything on one line, space could be used:
 
-    >>> vertical_graph(3, 1, 4, 1, 5, 9, 2, 6, sep=' ')
-    '⡯⠥ ⣿⣛⣓⠒⠂'
+```python
+>>> vertical_graph(3, 1, 4, 1, 5, 9, 2, 6, sep=' ')
+'⡯⠥ ⣿⣛⣓⠒⠂'
+```
 
 ###`horizontal_graph(*args)`
 Consume an iterable of integers and produce a horizontal bar graph using braille characters.
@@ -105,18 +123,22 @@ The graph is horizontal in that its dependent axis is the horizontal axis. Thus 
 
 The graph is anchored to the bottom, so columns fill in from the bottom of the current braille character and the next character is added on top when needed. For columns with no dots, the blank braille character is used, not a space character.
 
-    >>> horizontal_graph([1, 2, 3, 4])
-    '⣠⣾'
-    >>> horizontal_graph([1, 2, 3, 4, 5, 6])
-    '⠀⠀⣠\n⣠⣾⣿'
-    >>> print(horizontal_graph([1, 2, 3, 4, 5, 6]))
-    ⠀⠀⣠
-    ⣠⣾⣿
+```python
+>>> horizontal_graph([1, 2, 3, 4])
+'⣠⣾'
+>>> horizontal_graph([1, 2, 3, 4, 5, 6])
+'⠀⠀⣠\n⣠⣾⣿'
+>>> print(horizontal_graph([1, 2, 3, 4, 5, 6]))
+⠀⠀⣠
+⣠⣾⣿
+```
 
 Alternately, the arguments can be passed directly:
 
-    >>> horizontal_graph(1, 2, 3, 4)
-    '⣠⣾'
+```python
+>>> horizontal_graph(1, 2, 3, 4)
+'⣠⣾'
+```
 
 
 License
