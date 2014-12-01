@@ -71,7 +71,7 @@ For a description of the arguments and flags, run
 Functions
 ---------
 
-The following functions are defined in the `braillegraph` package.
+The following functions are defined in the `braillegraph` package. This documentation is also available via the built-in Python `help` function.
 
 ###`vertical_graph(*args, sep='\n')`
 Consume an iterable of integers and produce a vertical bar graph using braille characters.
