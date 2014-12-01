@@ -90,22 +90,34 @@ def _matrix_add_column(matrix, column, default=0):
     """Given a matrix as a list of lists, add a column to the right, filling in
     with a default value if necessary.
     """
-    extra_rows_needed = len(column) - len(matrix)
-    width = len(matrix[0]) if matrix else 0
+    height_difference = len(column) - len(matrix)
+
+    # The width of the matrix is the length of its longest row.
+    width = max(len(row) for row in matrix) if matrix else 0
+
+    # For now our offset is 0. We may need to shift our column down later.
     offset = 0
 
     # If we need extra rows, add them to the top of the matrix.
-    if extra_rows_needed > 0:
-        for _ in range(extra_rows_needed):
+    if height_difference > 0:
+        for _ in range(height_difference):
             matrix.insert(0, [default] * width)
 
     # If the column is shorter, we'll need to shift it down.
-    if extra_rows_needed < 0:
-        offset = -extra_rows_needed
-        column = ([default] * offset) + column
+    if height_difference < 0:
+        offset = -height_difference
+        #column = ([default] * offset) + column
 
     for index, value in enumerate(column):
-        matrix[index].append(value)
+        # The row index is the index in the column plus our offset.
+        row_index = index + offset
+        row = matrix[row_index]
+
+        # If this row is short, pad it with default values.
+        width_difference = width - len(row)
+        row.extend([default] * width_difference)
+
+        row.append(value)
 
 
 def vertical_graph(*args, sep='\n'):
