@@ -85,7 +85,12 @@ Functions
 
 The following functions are defined in the `braillegraph` package. This documentation is also available via the built-in Python `help` function.
 
-###`vertical_graph(*args, sep='\n')`
+###vertical\_graph
+
+```python
+vertical_graph(*args, sep='\n')
+```
+
 Consume an iterable of integers and produce a vertical bar graph using braille characters.
 
 The graph is vertical in that its dependent axis is the vertical axis. Thus each value is represented as a row running left to right, and values are listed top to bottom.
@@ -116,7 +121,12 @@ The optional `sep` parameter controls how groups are separated. If `sep` is not 
 '⡯⠥ ⣿⣛⣓⠒⠂'
 ```
 
-###`horizontal_graph(*args)`
+###horizontal\_graph
+
+```python
+horizontal_graph(*args)
+```
+
 Consume an iterable of integers and produce a horizontal bar graph using braille characters.
 
 The graph is horizontal in that its dependent axis is the horizontal axis. Thus each value is represented as a column running bottom to top, and values are listed left to right.
