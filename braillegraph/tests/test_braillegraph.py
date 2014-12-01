@@ -1,7 +1,8 @@
-'''Test the braillegraph.horizontal_graph function.'''
+'''Test the braillegraph module.'''
 
-import braillegraph
 import unittest
+
+from .. import braillegraph
 
 # Don't blame this class for the sins of its father.
 # pylint: disable=too-many-public-methods
