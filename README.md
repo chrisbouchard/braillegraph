@@ -5,7 +5,7 @@ braillegraph
 
 Someone on reddit posted a screenshot of their xmobar setup, which used braille characters to show the loads of their four processor cores, as well as several other metrics. I was impressed that you could fit so much data into a single line. I immediately set out to implement braille bar graphs for myself.
 
-The characters this script outputs are in the Unicode Braille Patterns section, code points 0x2800 through 0x28FF. Not all fonts support these characters, so if you can't see the examples below check your font settings.
+The characters this script outputs are in the Unicode Braille Patterns section, code points `0x2800` through `0x28FF`. Not all fonts support these characters, so if you can't see the examples below check your font settings.
 
 
 Installation
