@@ -141,6 +141,22 @@ Alternately, the arguments can be passed directly:
 ```
 
 
+Testing
+-------
+
+To run the unit tests, use the `unittest` module from the standard Python library.
+
+```sh
+% python -m unittest
+```
+
+This will automatically discover and run unit tests from the `braillegraph.tests` package. The package also supports the `doctest` module, which pulls examples out of docstrings.
+
+```sh
+% python -m doctest braillegraph/braillegraph.py
+```
+
+
 License
 -------
 
