@@ -12,7 +12,7 @@ Installation
 ------------
 This package is hosted on PyPI, so installation should be as simple as
 
-```sh
+```ShellSession
 % pip install braillegraph
 ```
 
@@ -20,7 +20,7 @@ Note that this package requires **at least Python 3.3**, so if your default Pyth
 
 If you want to install from this repository, download it and run
 
-```sh
+```ShellSession
 % python setup.py install
 ```
 
@@ -63,7 +63,7 @@ Alternately, the arguments can be passed directly:
 
 To use the package as a script, run it as
 
-```sh
+```ShellSession
 % python -m braillegraph vertical 3 1 4 1 5 9 2 6
 ⡯⠥
 ⣿⣛⣓⠒⠂
@@ -75,7 +75,7 @@ To use the package as a script, run it as
 
 For a description of the arguments and flags, run
 
-```sh
+```ShellSession
 % python -m braillegraph --help
 ```
 
@@ -156,13 +156,13 @@ Testing
 
 To run the unit tests, use the `unittest` module from the standard Python library.
 
-```sh
+```ShellSession
 % python -m unittest
 ```
 
 This will automatically discover and run unit tests from the `braillegraph.tests` package. The package also supports the `doctest` module, which pulls examples out of docstrings.
 
-```sh
+```ShellSession
 % python -m doctest braillegraph/braillegraph.py
 ```
 
