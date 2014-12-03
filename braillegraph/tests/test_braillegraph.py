@@ -31,6 +31,13 @@ class HorizontalGraphTestCase(unittest.TestCase):
             '⠀⠀⢀\n⠀⠀⣸⢠\n⣆⣇⣿⣼'
         )
 
+    def test_negative(self):
+        '''Test passing negative arguments.'''
+        self.assertEqual(
+            braillegraph.horizontal_graph(4, 3, 2, 1, -1, -2, -3, -4),
+            '⣷⣄⠀⠀\n⠀⠀⠙⢿'
+        )
+
 
 class VerticalGraphTestCase(unittest.TestCase):
     '''Test the braillegraph.vertical_graph function.'''
