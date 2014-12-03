@@ -34,8 +34,10 @@ class HorizontalGraphTestCase(unittest.TestCase):
     def test_negative(self):
         '''Test passing negative arguments.'''
         self.assertEqual(
-            braillegraph.horizontal_graph(4, 3, 2, 1, -1, -2, -3, -4),
-            '⣷⣄⠀⠀\n⠀⠀⠙⢿'
+            braillegraph.horizontal_graph(
+                4, 3, 2, 1, -1, -2, -3, -4, -5, -6, -7, -8
+            ),
+            '⣷⣄⠀⠀⠀⠀\n⠀⠀⠙⢿⣿⣿\n⠀⠀⠀⠀⠙⢿'
         )
 
 
