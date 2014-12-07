@@ -3,8 +3,10 @@
 from setuptools import setup
 
 setup(name='braillegraph',
-      version='0.6',
-      description='A library for creating graphs using Unicode braille characters',
+      version='0.10',
+      description=('A library for creating graphs using Unicode braille '
+                   'characters'),
+      long_description=open('README.rst', 'r').read(),
       url='http://github.com/chrisbouchard/braillegraph',
       author='Chris Bouchard',
       author_email='chris@upliftinglemma.net',
@@ -19,5 +21,6 @@ setup(name='braillegraph',
           'Topic :: Utilities'
       ],
       packages=['braillegraph'],
+      test_suite='braillegraph.tests.test_braillegraph',
       zip_safe=False)
 

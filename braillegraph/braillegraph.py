@@ -1,4 +1,4 @@
-'''A library for creating graphs using Unicode braille characters
+"""A library for creating graphs using Unicode braille characters.
 
 https://pypi.python.org/pypi/braillegraph
 
@@ -36,7 +36,7 @@ To use the package as a script, run it as
 For a description of the arguments and flags, run
 
     % python -m braillegraph --help
-'''
+"""
 
 import itertools
 
@@ -71,52 +71,70 @@ _BRAILLE_PARTIAL_COL = [
 
 
 def _chunk(iterable, size):
-    '''Split an iterable into chunks of a fixed size.'''
+    """Split an iterable into chunks of a fixed size."""
     # We're going to use some star magic to chunk the iterable. We create a
     # copy of the iterator size times, then pull a value from each to form a
     # chunk. The last chunk may have some trailing Nones if the length of the
     # iterable isn't a multiple of size, so we filter them out.
-    #
-    # pylint: disable=star-args
+
     args = (iter(iterable),) * size
 
     return (
+        # pylint: disable=star-args
         itertools.takewhile(lambda x: x is not None, group)
         for group in itertools.zip_longest(*args)
     )
 
 
 def _matrix_add_column(matrix, column, default=0):
-    '''Given a matrix as a list of lists, add a column to the right, filling in
+    """Given a matrix as a list of lists, add a column to the right, filling in
     with a default value if necessary.
-    '''
-    extra_rows_needed = len(column) - len(matrix)
-    width = len(matrix[0]) if matrix else 0
+    """
+    height_difference = len(column) - len(matrix)
+
+    # The width of the matrix is the length of its longest row.
+    width = max(len(row) for row in matrix) if matrix else 0
+
+    # For now our offset is 0. We may need to shift our column down later.
     offset = 0
 
     # If we need extra rows, add them to the top of the matrix.
-    if extra_rows_needed > 0:
-        for _ in range(extra_rows_needed):
+    if height_difference > 0:
+        for _ in range(height_difference):
             matrix.insert(0, [default] * width)
 
     # If the column is shorter, we'll need to shift it down.
-    if extra_rows_needed < 0:
-        offset = -extra_rows_needed
-        column = ([default] * offset) + column
+    if height_difference < 0:
+        offset = -height_difference
+        #column = ([default] * offset) + column
 
     for index, value in enumerate(column):
-        matrix[index].append(value)
+        # The row index is the index in the column plus our offset.
+        row_index = index + offset
+        row = matrix[row_index]
+
+        # If this row is short, pad it with default values.
+        width_difference = width - len(row)
+        row.extend([default] * width_difference)
+
+        row.append(value)
 
 
 def vertical_graph(*args, sep='\n'):
-    '''Consume an iterable of integers and produce a vertical bar graph using
-    braille characters. If the iterable contains more than four integers, it
-    will be chunked into groups of four, separated with newlines by default.
+    r"""Consume an iterable of integers and produce a vertical bar graph using
+    braille characters.
+
+    The graph is vertical in that its dependent axis is the vertical axis. Thus
+    each value is represented as a row running left to right, and values are
+    listed top to bottom.
+
+    If the iterable contains more than four integers, it will be chunked into
+    groups of four, separated with newlines by default.
 
         >>> vertical_graph([1, 2, 3, 4])
         '⣷⣄'
         >>> vertical_graph([1, 2, 3, 4, 5, 6])
-        '⣷⣄\\n⠛⠛⠓'
+        '⣷⣄\n⠛⠛⠓'
         >>> print(vertical_graph([1, 2, 3, 4, 5, 6]))
         ⣷⣄
         ⠛⠛⠓
@@ -132,18 +150,18 @@ def vertical_graph(*args, sep='\n'):
 
         >>> vertical_graph(3, 1, 4, 1, 5, 9, 2, 6, sep=' ')
         '⡯⠥ ⣿⣛⣓⠒⠂'
-    '''
+
+    """
     lines = []
 
     # If the arguments were passed as a single iterable, pull it out.
     # Otherwise, just use them as-is.
     if len(args) == 1:
-
         bars = args[0]
     else:
         bars = args
 
-    # Make sure we use the default
+    # Make sure we use the default when needed
     if sep is None:
         sep = '\n'
 
@@ -187,13 +205,22 @@ def vertical_graph(*args, sep='\n'):
 
 
 def horizontal_graph(*args):
-    '''Consume an iterable of integers and produce a horizontal bar graph using
+    r"""Consume an iterable of integers and produce a horizontal bar graph using
     braille characters.
+
+    The graph is horizontal in that its dependent axis is the horizontal axis.
+    Thus each value is represented as a column running bottom to top, and
+    values are listed left to right.
+
+    The graph is anchored to the bottom, so columns fill in from the bottom of
+    the current braille character and the next character is added on top when
+    needed. For columns with no dots, the blank braille character is used, not
+    a space character.
 
         >>> horizontal_graph([1, 2, 3, 4])
         '⣠⣾'
         >>> horizontal_graph([1, 2, 3, 4, 5, 6])
-        '⠀⠀⣠\\n⣠⣾⣿'
+        '⠀⠀⣠\n⣠⣾⣿'
         >>> print(horizontal_graph([1, 2, 3, 4, 5, 6]))
         ⠀⠀⣠
         ⣠⣾⣿
@@ -202,7 +229,8 @@ def horizontal_graph(*args):
 
         >>> horizontal_graph(1, 2, 3, 4)
         '⣠⣾'
-    '''
+
+    """
     lines = []
 
     # If the arguments were passed as a single iterable, pull it out.
@@ -235,14 +263,17 @@ def horizontal_graph(*args):
             column = ([_BRAILLE_EMPTY_BLOCK] * extra_blocks_needed) + column
 
             # Fill in the majority of the column with full braille colums (four
-            # dots).
+            # dots). We negate the index to access from the end of the list.
             for block_index in range(-full_blocks_needed, 0, 1):
                 column[block_index] += _BRAILLE_FULL_COL[braille_col]
 
-            # If we need a partial column, fill it in.
+            # If we need a partial column, fill it in. We negate the index to
+            # access from the end of the list.
             if bar_value % 4:
                 partial_index = (bar_value % 4) - 1
-                column[-blocks_needed] += _BRAILLE_PARTIAL_COL[braille_col][partial_index]
+                column[-blocks_needed] += (
+                    _BRAILLE_PARTIAL_COL[braille_col][partial_index]
+                )
 
         # Add this column to the lines.
         _matrix_add_column(lines, column, default=_BRAILLE_EMPTY_BLOCK)
